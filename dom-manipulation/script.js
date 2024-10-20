@@ -21,7 +21,7 @@ async function fetchQuotesFromServer() {
     console.log('Quotes fetched from server:', fetchedQuotes);
 
     // Save to local storage
-    saveQuotes();
+    syncQuotes(); // Ensure local storage is in sync after fetching new quotes
     populateCategories();
   } catch (error) {
     console.error("Error fetching quotes from server:", error);
@@ -70,7 +70,7 @@ function addQuote() {
 
   const newQuote = { text: newQuoteText, category: newQuoteCategory };
   quotes.push(newQuote);
-  saveQuotes();
+  syncQuotes(); // Sync quotes to local storage after adding a new one
   populateCategories();
   alert("New quote added!");
 
@@ -128,6 +128,11 @@ function loadQuotes() {
   }
 }
 
+// Function to sync quotes with local storage
+function syncQuotes() {
+  saveQuotes(); // Save the current quotes to local storage
+}
+
 // Function to export quotes to JSON file
 function exportToJsonFile() {
   const dataStr = JSON.stringify(quotes);
@@ -146,11 +151,10 @@ function importFromJsonFile(event) {
   fileReader.onload = function(event) {
     const importedQuotes = JSON.parse(event.target.result);
     quotes.push(...importedQuotes);
-    saveQuotes();
+    syncQuotes(); // Sync quotes after importing
     populateCategories();
     alert('Quotes imported successfully!');
   };
-  fileReader.readAsText(event.target.files[0]);
 }
 
 // Event listener for showing a new quote
