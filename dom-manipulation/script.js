@@ -164,7 +164,11 @@ document.getElementById('newQuote').addEventListener('click', showRandomQuote);
 window.addEventListener('DOMContentLoaded', () => {
   loadQuotes();
   populateCategories();
+
+  // Set interval to show a new random quote every 5 seconds
+  setInterval(showRandomQuote, 5000);
 });
 
 // Fetch quotes from the simulated server
 fetchQuotesFromServer();
+
