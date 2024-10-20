@@ -28,6 +28,24 @@ async function fetchQuotesFromServer() {
   }
 }
 
+// Function to send a new quote to the server (POST request)
+async function sendQuoteToServer(quote) {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(quote)
+    });
+
+    const result = await response.json();
+    console.log('Quote sent to server:', result);
+  } catch (error) {
+    console.error("Error sending quote to server:", error);
+  }
+}
+
 // Function to display a random quote
 function showRandomQuote() {
   if (quotes.length === 0) {
@@ -55,6 +73,9 @@ function addQuote() {
   saveQuotes();
   populateCategories();
   alert("New quote added!");
+
+  // Send the new quote to the server (POST request)
+  sendQuoteToServer(newQuote);
 
   // Clear input fields
   document.getElementById('newQuoteText').value = "";
