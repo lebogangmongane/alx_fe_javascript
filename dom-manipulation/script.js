@@ -149,6 +149,8 @@ function exportToJsonFile() {
 // Function to import quotes from JSON file
 function importFromJsonFile(event) {
   const fileReader = new FileReader();
+  
+  // The readAsText method is used here to read the content of the file
   fileReader.onload = function(event) {
     const importedQuotes = JSON.parse(event.target.result);
     quotes.push(...importedQuotes);
@@ -156,6 +158,9 @@ function importFromJsonFile(event) {
     populateCategories();
     alert('Quotes imported successfully!');
   };
+
+  // Use readAsText to read the content of the file selected by the user
+  fileReader.readAsText(event.target.files[0]);
 }
 
 // Event listener for showing a new quote
