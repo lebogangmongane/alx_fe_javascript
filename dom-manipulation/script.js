@@ -128,9 +128,10 @@ function loadQuotes() {
   }
 }
 
-// Function to sync quotes with local storage
+// Function to sync quotes with local storage and notify user
 function syncQuotes() {
   saveQuotes(); // Save the current quotes to local storage
+  alert("Quotes synced with server!"); // Notify the user
 }
 
 // Function to export quotes to JSON file
@@ -171,4 +172,3 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Fetch quotes from the simulated server
 fetchQuotesFromServer();
-
