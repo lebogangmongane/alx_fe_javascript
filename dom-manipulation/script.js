@@ -4,19 +4,28 @@ let quotes = [
   { text: "Success is not the key to happiness. Happiness is the key to success.", category: "Success" }
 ];
 
-// Fetch quotes from a simulated server (mock API)
-function fetchQuotesFromServer() {
-  const serverQuotes = [
-    { text: "Do not go where the path may lead, go instead where there is no path and leave a trail.", category: "Adventure" },
-    { text: "Believe you can and you're halfway there.", category: "Belief" }
-  ];
+// Fetch quotes from an external server (using async/await and a real API)
+async function fetchQuotesFromServer() {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const serverQuotes = await response.json();
 
-  // Simulate server response by adding serverQuotes to the local quotes array
-  quotes.push(...serverQuotes);
-  console.log('Quotes fetched from server and added:', serverQuotes);
+    // Simulate extracting quotes and categories from the server data (using title as text)
+    const fetchedQuotes = serverQuotes.slice(0, 5).map(post => ({
+      text: post.title,
+      category: "Server Category"
+    }));
 
-  // Persist updated quotes in local storage
-  saveQuotes();
+    // Add the fetched quotes to the existing array
+    quotes.push(...fetchedQuotes);
+    console.log('Quotes fetched from server:', fetchedQuotes);
+
+    // Save to local storage
+    saveQuotes();
+    populateCategories();
+  } catch (error) {
+    console.error("Error fetching quotes from server:", error);
+  }
 }
 
 // Function to display a random quote
