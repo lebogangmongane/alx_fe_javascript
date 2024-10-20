@@ -163,6 +163,29 @@ function importFromJsonFile(event) {
   fileReader.readAsText(event.target.files[0]);
 }
 
+// Function to create the Add Quote form dynamically
+function createAddQuoteForm() {
+  const formContainer = document.getElementById('formContainer');
+  
+  // Create form elements
+  const quoteInput = document.createElement('input');
+  quoteInput.id = 'newQuoteText';
+  quoteInput.placeholder = 'Enter your quote here';
+  
+  const categoryInput = document.createElement('input');
+  categoryInput.id = 'newQuoteCategory';
+  categoryInput.placeholder = 'Enter category';
+
+  const addButton = document.createElement('button');
+  addButton.textContent = 'Add Quote';
+  addButton.onclick = addQuote; // Attach addQuote function to button click
+
+  // Append elements to form container
+  formContainer.appendChild(quoteInput);
+  formContainer.appendChild(categoryInput);
+  formContainer.appendChild(addButton);
+}
+
 // Event listener for showing a new quote
 document.getElementById('newQuote').addEventListener('click', showRandomQuote);
 
@@ -170,6 +193,7 @@ document.getElementById('newQuote').addEventListener('click', showRandomQuote);
 window.addEventListener('DOMContentLoaded', () => {
   loadQuotes();
   populateCategories();
+  createAddQuoteForm(); // Create the Add Quote form on page load
 
   // Set interval to show a new random quote every 5 seconds
   setInterval(showRandomQuote, 5000);
